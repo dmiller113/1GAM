@@ -5,6 +5,7 @@ import Svg exposing (Svg, svg, circle, rect)
 import Svg.Attributes exposing (width, height, cx, cy, r, fill, x, y)
 import Time exposing (Time, millisecond)
 import Keyboard exposing (downs, KeyCode)
+import Char
 
 
 -- We making Pong. We such good game dev.
@@ -73,36 +74,34 @@ initialBall =
     , ballColor = "#fff"
     , ballSpeed =
         { cX = 5
-        , cY = -1
+        , cY = -5
         }
     }
 
 
-initState : ( Model, Cmd Msg )
+initState : Model
 initState =
-    ( { ball = initialBall
-      , paddles =
-            [ { position =
-                    { x = 10
-                    , y = 25
-                    }
-              , color = "#bb6633"
-              , owner = PlayerOne 0
-              , width = initialPaddleWidth
-              }
-            , { position =
-                    { x = 435
-                    , y = 25
-                    }
-              , color = "#bb6633"
-              , owner = PlayerTwo 0
-              , width = initialPaddleWidth
-              }
-            ]
-      , lastTick = 0
-      }
-    , Cmd.none
-    )
+    { ball = initialBall
+    , paddles =
+        [ { position =
+                { x = 10
+                , y = 25
+                }
+          , color = "#bb6633"
+          , owner = PlayerOne 0
+          , width = initialPaddleWidth
+          }
+        , { position =
+                { x = 435
+                , y = 25
+                }
+          , color = "#bb6633"
+          , owner = PlayerTwo 0
+          , width = initialPaddleWidth
+          }
+        ]
+    , lastTick = 0
+    }
 
 
 initialPaddleWidth : Int
@@ -113,6 +112,31 @@ initialPaddleWidth =
 timeToPoll : Time
 timeToPoll =
     1000 / 24 * millisecond
+
+
+rCode : KeyCode
+rCode =
+    Char.toCode 'R'
+
+
+wCode : KeyCode
+wCode =
+    Char.toCode 'W'
+
+
+sCode : KeyCode
+sCode =
+    Char.toCode 'S'
+
+
+downArrowCode : KeyCode
+downArrowCode =
+    40
+
+
+upArrowCode : KeyCode
+upArrowCode =
+    38
 
 
 
@@ -210,6 +234,58 @@ addScore { x, y } player =
                 player
 
 
+movePaddle : Paddle -> Speed -> Paddle
+movePaddle paddle { cY } =
+    let
+        { position } =
+            paddle
+
+        { y } =
+            position
+
+        newPosition =
+            { position | y = clamp 5 395 (y + cY) }
+    in
+        { paddle | position = newPosition }
+
+
+moveCorrectPaddle : KeyCode -> Speed -> Paddle -> Paddle
+moveCorrectPaddle code speed paddle =
+    if List.member code [ wCode, sCode ] then
+        case paddle.owner of
+            PlayerOne _ ->
+                movePaddle paddle speed
+
+            PlayerTwo _ ->
+                paddle
+    else
+        case paddle.owner of
+            PlayerTwo _ ->
+                movePaddle paddle speed
+
+            PlayerOne _ ->
+                paddle
+
+
+handleKeys : KeyCode -> Model -> Model
+handleKeys code state =
+    if code == rCode then
+        initState
+    else if List.member code [ wCode, sCode, upArrowCode, downArrowCode ] then
+        let
+            speed =
+                if code == wCode || code == upArrowCode then
+                    { cX = 0, cY = -5 }
+                else if code == sCode || code == downArrowCode then
+                    { cX = 0, cY = 5 }
+                else
+                    { cX = 0, cY = 0 }
+        in
+            { state | paddles = List.map (moveCorrectPaddle code speed) state.paddles }
+    else
+        state
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg state =
     case msg of
@@ -219,13 +295,7 @@ update msg state =
             )
 
         KeyDown code ->
-            let
-                aset =
-                    Debug.log "code" code
-            in
-                ( state
-                , Cmd.none
-                )
+            ( handleKeys code state, Cmd.none )
 
         Tick t ->
             let
@@ -361,7 +431,7 @@ subscriptions model =
 main : Program Never Model Msg
 main =
     Html.program
-        { init = initState
+        { init = ( initState, Cmd.none )
         , view = view
         , update = update
         , subscriptions = subscriptions
