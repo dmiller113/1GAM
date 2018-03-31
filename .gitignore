@@ -4,3 +4,5 @@
 */repl-temp-*
 # Don't upload node_modules
 */node_modules
+# Don't upload huge index files or elm runtimes
+*/elm.js
