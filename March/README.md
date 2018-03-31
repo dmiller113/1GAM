@@ -1,6 +1,6 @@
 1GAM entry for March: Pong!
 
-Written in [elm-lang](www.elm-lang.org)
+Written in [elm-lang](http://www.elm-lang.org)
 
 #### Controls
 - Arrow keys for Player 1
