@@ -4,5 +4,7 @@
 */repl-temp-*
 # Don't upload node_modules
 */node_modules
+# Don't Upload yarn errors
+*/yarn-error.log
 # Don't upload huge index files or elm runtimes
 */elm.js
