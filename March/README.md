@@ -3,8 +3,8 @@
 Written in [elm-lang](http://www.elm-lang.org)
 
 #### Controls
-- Arrow keys for Player 1
-- W, S for Player 2
+- W, S for Player 1
+- Arrow keys for Player 2
 - Space, R to reset
 
 #### Feature Roadmap
@@ -17,4 +17,4 @@ Written in [elm-lang](http://www.elm-lang.org)
 - DONE Ball moves
 - DONE collisions
 - DONE scoring
-- TODO keyboard support
+- DONE keyboard support
