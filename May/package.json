@@ -1,0 +1,12 @@
+{
+  "name": "arkanoid-clone",
+  "version": "0.0.1",
+  "description": "Arkanoid Clone",
+  "main": "index.js",
+  "author": "Daniel Miller",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "elm": "^0.18.0"
+  }
+}
