@@ -6,7 +6,12 @@
   "author": "Daniel Miller",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "node server.js",
+    "compile": "yarn elm make Game.elm --output public/game.js"
+  },
   "dependencies": {
-    "elm": "^0.18.0"
+    "elm": "^0.18.0",
+    "express": "^4.16.3"
   }
 }
