@@ -1,28 +1,12 @@
 module Game exposing (..)
 import Html exposing (Html, program)
-import Dict exposing (Dict(..), empty)
+import Dict exposing (empty)
 
-type alias Position = (Int, Int)
-
-type alias ID = Int
-
-type alias Model =
-  { balls : List ID
-  , blocks : List ID
-  , field : Dict Position ID
-  , gameState : GameState
-  , paddles : List ID
-  , powerUps : List ID
-  }
+import Data.Model exposing (Model)
+import Data.GameState exposing (GameState(StartMenu))
 
 type Msg
   = Nop
-
-type GameState
-  = Menu
-  | GameStart
-  | Playing
-  | GameOver
 
 main : Program Never Model Msg
 main =
@@ -38,7 +22,7 @@ init =
   ({ balls = []
   , blocks = []
   , field = empty
-  , gameState = Menu
+  , gameState = StartMenu
   , paddles = []
   , powerUps = []
   }, Cmd.none)

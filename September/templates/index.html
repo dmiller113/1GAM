@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Arknoid - Elm</title>
+  <script src="game.js"></script>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    .small-header {
+      font-size: 20px;
+    }
+
+    .centered {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <span>Arkanoid</span>
+    <span class="small-header">in elm</span>
+  </h1>
+  <div class="centered">
+    <div id="elm-container"></div>
+  </div>
+  <script type="text/javascript">
+    var element = document.getElementById('elm-container');
+    var app = Elm.Game.embed(element);
+  </script>
+</body>
+</html>
