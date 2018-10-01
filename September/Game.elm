@@ -2,11 +2,9 @@ module Game exposing (..)
 import Html exposing (Html, program)
 import Dict exposing (empty)
 
+import Data.Msg exposing (Msg)
 import Data.Model exposing (Model)
 import Data.GameState exposing (GameState(StartMenu))
-
-type Msg
-  = Nop
 
 main : Program Never Model Msg
 main =
