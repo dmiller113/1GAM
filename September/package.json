@@ -8,7 +8,8 @@
   "private": false,
   "scripts": {
     "start": "node server.js",
-    "compile": "yarn elm make Game.elm --output public/game.js"
+    "compile": "yarn elm make Game.elm --output public/game.js",
+    "template-compile": "cp -r templates/*.html public"
   },
   "dependencies": {
     "elm": "^0.18.0",
