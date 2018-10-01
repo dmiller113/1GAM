@@ -6,6 +6,8 @@ import Data.Msg exposing (Msg)
 import Data.Model exposing (Model)
 import Data.GameState exposing (GameState(StartMenu))
 
+import StartMenu.View
+
 main : Program Never Model Msg
 main =
   program
@@ -27,9 +29,9 @@ init =
 
 view : Model -> Html.Html Msg
 view state =
-  Html.div [] [
-    Html.text "Test"
-  ]
+  case state.gameState of
+    StartMenu -> StartMenu.View.view state
+    _ -> Html.text "wut"
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg state =
